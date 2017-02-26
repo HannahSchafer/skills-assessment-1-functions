@@ -74,12 +74,10 @@ def check_hometown(town):
 #    (b) Write a function that takes a first and last name as arguments and
 #        returns the concatenation of the two names in one string.
 def is_full_name(first_name, last_name):
-    """Takes in first and last name as two stringed arguments.
-        Returns them as a concatenated full name string.
+    """Takes in first and last name and returns a full name.
     """
-
-    full_name = first_name + ' ' + last_name
-    return full_name
+    return first_name + ' ' + last_name
+ 
 
 #    (c) Write a function that takes a home town, a first name, and a last name
 #        as arguments, calls both functions from part (a) and (b) and prints
@@ -89,6 +87,7 @@ def is_full_name(first_name, last_name):
 
 def greeting(town, first_name, last_name):
     """Compares another person's home town with your own.
+
        If the same home town, prints one greeting, if not, prints another greeting.
     """
 
@@ -96,7 +95,6 @@ def greeting(town, first_name, last_name):
         print "Hi, {}, we're from the same place!".format(is_full_name(first_name, last_name))
     else: 
         print "Hi {}, where are you from?".format(is_full_name(first_name, last_name))
-
 
 
 ###############################################################################
@@ -114,6 +112,8 @@ def is_berry(fruit):
     berries = ["strawberry", "cherry", "blackberry"]
     if fruit.lower() in berries:
         return True
+    else:
+        return False
 
 
 # (b) Write another function, shipping_cost(), which calculates shipping cost
@@ -143,8 +143,6 @@ def append_to_list(lst, num):
     new_list.append(num)
     return new_list
 
-print append_to_list([5,4,3,2], 1)
-
 
 
 # 3. Write a function calculate_price to calculate an item's total cost by
@@ -163,9 +161,26 @@ print append_to_list([5,4,3,2], 1)
 #    Your function should return the total cost of the item, including tax and
 #    fees.
 
-def calculate_price(FILL_ME_IN):
+def calculate_price(base_price, state, tax = .05):
+    """Returns total cost of an item, taxes and fees included, 
+    based on which state the purchase is made. 
+    """
 
-    pass
+    total_cost = 0 
+
+    if state == 'CA':
+        total_cost = base_price + (base_price * tax) + (.03 * (base_price + (base_price * tax)))
+    elif state == 'PA':
+        total_cost = base_price + (base_price * tax) + 2
+    elif state == 'MA':
+        if base_price < 100:
+            total_cost = base_price + (base_price * tax) + 1
+        else:
+            total_cost = base_price + (base_price * tax) + 3
+    else:
+        total_cost = base_price + (base_price * tax)
+
+    return total_cost
 
 
 ###############################################################################
@@ -182,6 +197,13 @@ def calculate_price(FILL_ME_IN):
 # isn't something we've discussed yet in class; you might need to google how to
 # write a Python function that takes in an arbitrary number of arguments.
 
+def append_many(lst, *args):
+    """Returns the list after inputing the list and as many or few additional values as desired.
+    """
+    for value in args:
+        lst.append(value)
+    return lst
+
 
 # 2. Make a new function with a nested inner function.
 # The outer function will take in a word.
@@ -195,6 +217,17 @@ def calculate_price(FILL_ME_IN):
 #>>> outer("Balloonicorn")
 #('Balloonicorn', 'BalloonicornBalloonicornBalloonicorn')
 
+def outer(word):
+    """Make an inner function within an outer function. 
+
+    The outer function takes a word.
+    The inner function multiplies this word by 3, and the outer function returns
+    the original word and the result of the inner fuction (the word multiplied by 3)
+    """
+    def inner():
+        return word * 3
+    inner()
+    return (word, inner())
 
 ###############################################################################
 
